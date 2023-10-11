@@ -1,2 +1,2 @@
-# Matlab_Jenkins_Github
-This Repository is used for Matlab_Github_jenkins POC
+# Matlab_Jenkins
+This Repository is used to setup the Matlab_Jenkins setup to automate the Test Case Execution
