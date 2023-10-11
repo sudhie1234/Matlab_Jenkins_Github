@@ -71,21 +71,6 @@ Results = run(mj,apsuite)
 warning on Stateflow:cdr:VerifyDangerousComparison
 warning on Stateflow:Runtime:TestVerificationFailed
 
-%addpath(genpath('Test_files'));
-
-%suite = testsuite(pwd, 'IncludeSubfolders', true);
-
-%[~,~] = mkdir('matlabTestArtifacts');
-
-%runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed );
-%runner.addPlugin(TestReportPlugin.producingHTML('testReport'));
-%runner.addPlugin(TAPPlugin.producingVersion13(ToFile('matlabTestArtifacts/taptestresults.tap')));
-%runner.addPlugin(XMLPlugin.producingJUnitFormat('matlabTestArtifacts/junittestresults.xml'));
-%runner.addPlugin(CodeCoveragePlugin.forFolder({'Test_files'}, 'IncludingSubfolders', true, 'Producing', CoverageReport('covReport', ...
-%   'MainFile','index.html')));
-
-%results = runner.run(testCase);
-
 % Generate Zip files
 % zip('covReport.zip','covReport');
 nfailed = nnz([results.Failed]);
