@@ -10,7 +10,7 @@ pipeline {
                 axes {
                     axis {
                         name 'MATLAB_VERSION'
-                        values 'R2023a'
+                        values 'R2022b'
                     }
                 }
                 
