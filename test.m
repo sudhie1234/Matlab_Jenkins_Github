@@ -22,6 +22,7 @@ import matlab.unittest.plugins.ToFile;
 
 proj = openProject("Matlab_Jenkins.prj");
 open_system('wiper.slx');
+open_system('Wiper_Harness.slx');
 sltestmgr; 
 testFile = sltest.testmanager.load('Matlab_Jenkins_Automated.mldatx'); 
 testSuite = getTestSuiteByName(testFile,'Test Scenarios'); 
