@@ -6,12 +6,12 @@ import sltest.plugins.ToTestManagerLog;
 import sltest.plugins.ModelCoveragePlugin;
 import sltest.plugins.coverage.CoverageMetrics;
 import sltest.plugins.coverage.ModelCoverageReport;
-import matlab.automation.streams.ToFile
-import sltest.plugins.coverage.ModelCoverageReport
+import sltest.testmanager.importResults;
+import sltest.plugins.coverage.ModelCoverageReport;
 import matlab.unittest.plugins.codecoverage.CoberturaFormat;
 import matlab.unittest.TestSuite;
 import matlab.unittest.plugins.TestReportPlugin;
-import matlab.automation.streams.ToFile
+import matlab.automation.streams.ToFile;
 import matlab.unittest.Verbosity;
 import matlab.unittest.plugins.XMLPlugin;
 import matlab.unittest.plugins.TestReportPlugin;
