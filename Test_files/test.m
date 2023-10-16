@@ -18,7 +18,7 @@ import matlab.unittest.plugins.codecoverage.CoverageReport;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 
-proj = openProject("Matlab_Jenkins.prj");
+proj = openProject('Matlab_Jenkins.prj');
 open_system('wiper.slx');
 open_system('Wiper_Harness.slx');
 sltestmgr; 
