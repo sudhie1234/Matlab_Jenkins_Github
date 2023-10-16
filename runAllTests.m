@@ -20,36 +20,40 @@ import matlab.unittest.plugins.codecoverage.CoverageReport;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 
-userpath(newpath)
-savepath;
+addpath(genpath('Test_files'));
 
-proj = openProject('Matlab_Jenkins.prj');
-open_system('wiper.slx');
-open_system('Wiper_Harness.slx');
-sltestmgr;
+suite = testsuite(pwd, 'IncludeSubfolders', true);
+
+[~,~] = mkdir('matlabTestArtifacts');
+
+runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed );
+runner.addPlugin(TestReportPlugin.producingHTML('testReport'));
+runner.addPlugin(TAPPlugin.producingVersion13(ToFile('matlabTestArtifacts/taptestresults.tap')));
+runner.addPlugin(XMLPlugin.producingJUnitFormat('matlabTestArtifacts/junittestresults.xml'));
+runner.addPlugin(TestReportPlugin.producingPDF('mjreport.pdf');
+runner.addPlugin(TAPPlugin.producingVersion13(ToFile('mjreport.tap'))
+runner.addPlugin(CodeCoveragePlugin.forFolder({'Test_folder'}, 'IncludingSubfolders', true, 'Producing', CoverageReport('covReport', ...
+   'MainFile','index.html')));
+
+results = runner.run(suite);
+
+%proj = openProject('Matlab_Jenkins.prj');
+%open_system('wiper.slx');
+%open_system('Wiper_Harness.slx');
+%sltestmgr;
 
 testfile = fullfile('Matlab_Jenkins_Automated.mldatx'); %Importing the mldatx file
 sltest.testmanager.view; %Viewing the Test Manager
 sltest.testmanager.load(testfile); %Loading the Test file to Test Manager
 suite = testsuite('Matlab_Jenkins_Automated.mldatx'); % Creating a Suite
-mj = TestRunner.withNoPlugins; %Creating a Test Runner
-
-%To Generate a Pdf result
-pdfFile = 'mjreport.pdf';
-trp = TestReportPlugin.producingPDF(pdfFile);
-addPlugin(mj,trp) %Adding pdf report generator plugin to runner
+%mj = TestRunner.withNoPlugins; %Creating a Test Runner
 
 %Adding Test Manager Results to the MATLAB Test Report.
 tmr = TestManagerResultsPlugin; 
-addPlugin(mj,tmr) %Adding Test Manager Report Generator plugin to runner
-
-%Outputting plugin outputs to the F14Output.tap file.
-tapFile = 'mjreport.tap';
-tap = TAPPlugin.producingVersion13(ToFile(tapFile));
-addPlugin(mj,tap) %Adding tap report generator plugin to runner
+addPlugin(runner,tmr) %Adding Test Manager Report Generator plugin to runner
 
 %Running the Tests
-result = run(mj,suite);
+result = run(runner,suite);
 
 %Initializing Model Coverage Results for Continuous Integration
 con_test = sltest.testmanager.TestFile('Test_files\AutopilotTestFile.mldatx');
@@ -66,14 +70,14 @@ rpt = CoberturaFormat(rptfile)
 mcp = ModelCoveragePlugin('Collecting',cmet,'Producing',rpt)
 
 %Adding Coverage to the Test Runner
-addPlugin(mj,mcp)
+addPlugin(runner,mcp)
 
 % Turn off command line warnings:
 warning off Stateflow:cdr:VerifyDangerousComparison
 warning off Stateflow:Runtime:TestVerificationFailed
 
 %Running the Tests
-Results = run(mj,apsuite)
+Results = run(runner,apsuite)
 
 %Reenable warnings
 warning on Stateflow:cdr:VerifyDangerousComparison
