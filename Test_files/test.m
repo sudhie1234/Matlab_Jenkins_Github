@@ -26,3 +26,14 @@ testFile = sltest.testmanager.load('Matlab_Jenkins_Automated.mldatx');
 testSuite = getTestSuiteByName(testFile,'Test Scenarios'); 
 testCase = getTestCaseByName(testSuite,'Test_Case1'); 
 resultObj = run(testCase);
+
+runner = TestRunner.withTextOutput('OutputDetail', Verbosity.Detailed );
+runner.addPlugin(TestReportPlugin.producingHTML('testReport'));
+runner.addPlugin(TAPPlugin.producingVersion13(ToFile('matlabTestArtifacts/taptestresults.tap')));
+runner.addPlugin(XMLPlugin.producingJUnitFormat('matlabTestArtifacts/junittestresults.xml'));
+runner.addPlugin(TestReportPlugin.producingPDF('mjreport.pdf');
+runner.addPlugin(TAPPlugin.producingVersion13(ToFile('mjreport.tap'))
+runner.addPlugin(CodeCoveragePlugin.forFolder({'Test_folder'}, 'IncludingSubfolders', true, 'Producing', CoverageReport('covReport', ...
+   'MainFile','index.html')));
+
+results = runner.run(suite);
