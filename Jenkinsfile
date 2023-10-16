@@ -21,7 +21,7 @@ pipeline {
                 stages {
                     stage('Run MATLAB Command') {
                         steps {
-                            runMATLABCommand 'buildMEXfiles'
+                            runMATLABCommand 'test'
                         }
                     }
                     
